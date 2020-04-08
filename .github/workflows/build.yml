@@ -10,10 +10,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./source
 
     steps:
-    - working-directory: source
-      
+    
     - uses: actions/checkout@v2
 
     - name: Setup .NET Core
@@ -25,7 +26,9 @@ jobs:
       run: dotnet restore
       
     - name: Build
+      working-directory: ${{working-directory}}
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
+      working-directory: ${{working-directory}}
       run: dotnet test --no-restore --verbosity normal
